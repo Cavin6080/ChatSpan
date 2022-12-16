@@ -21,13 +21,13 @@ class SelectUserController extends GetxController {
       await client.connectUser(
         User(
           id: user.id,
-          name: user.name,
+          // name: user.name,
           extraData: {
             "name": user.name,
             "image": user.photoURL,
           },
         ),
-        client.devToken(Constant.STREAM_KEY).rawValue,
+        client.devToken(user.id).rawValue,
       );
       isLoading = false;
       Get.toNamed(Routes.NAVIGATION);

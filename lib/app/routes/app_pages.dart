@@ -66,7 +66,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHAT_SCREEN,
-      page: () => const ChatScreenView(),
+      page: () => ChatScreenView(),
       binding: ChatScreenBinding(),
     ),
     GetPage(

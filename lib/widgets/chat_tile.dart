@@ -25,8 +25,11 @@ class ChatTile extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(
         radius: Constant.avtarRadius,
-        backgroundImage:
-            photoUrl != null ? CachedNetworkImageProvider(photoUrl!) : null,
+        backgroundImage: photoUrl != null
+            ? photoUrl!.isNotEmpty
+                ? CachedNetworkImageProvider(photoUrl!)
+                : null
+            : null,
       ),
       title: Text(
         userName,

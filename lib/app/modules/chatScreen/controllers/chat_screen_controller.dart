@@ -12,17 +12,22 @@ class ChatScreenController extends GetxController {
     if (Get.arguments != null) {
       channel = Get.arguments;
     }
-    unreadCountSubscription = StreamChannel.of(Get.context!)
-        .channel
-        .state!
-        .unreadCountStream
-        .listen((_unreadCountHandler));
+
     super.onInit();
   }
 
   Future<void> _unreadCountHandler(int count) async {
     if (count > 0) {
-      await StreamChannel.of(Get.context!).channel.markRead();
+      await channel.markRead();
     }
+  }
+
+  @override
+  void onReady() {
+    // _unreadCountHandler(count)
+
+    unreadCountSubscription =
+        channel.state!.unreadCountStream.listen((_unreadCountHandler));
+    super.onReady();
   }
 }

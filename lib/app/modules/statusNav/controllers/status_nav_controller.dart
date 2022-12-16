@@ -28,6 +28,7 @@ class StatusNavController extends GetxController {
         //   'members',
         //   [StreamChatCore.of(Get.context!).currentUser!.id],
         // ),
+
         filter: Filter.notEqual('id', Get.context!.currentUser!.id));
     userListController.doInitialLoad();
 

@@ -19,6 +19,7 @@ class _ActionBarState extends State<ActionBar> {
           .sendMessage(Message(text: controller.text));
       controller.clear();
       FocusScope.of(context).unfocus();
+      await StreamChannel.of(context).channel.markRead();
     }
   }
 

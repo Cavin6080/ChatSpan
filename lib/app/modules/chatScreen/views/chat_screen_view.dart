@@ -21,7 +21,6 @@ class ChatScreenView extends GetView<ChatScreenController> {
   @override
   Widget build(BuildContext context) {
     // final data = MessageGenerator.generate(60, 1337);
-
     return StreamChannel(
       channel: controller.channel,
       child: Scaffold(

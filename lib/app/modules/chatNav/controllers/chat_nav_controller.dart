@@ -29,4 +29,10 @@ class ChatNavController extends GetxController {
 
     super.onInit();
   }
+
+  Future<void> unreadCountHandler(int count) async {
+    if (count > 0) {
+      await StreamChannel.of(Get.context!).channel.markRead();
+    }
+  }
 }

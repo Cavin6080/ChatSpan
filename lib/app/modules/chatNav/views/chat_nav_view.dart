@@ -63,59 +63,62 @@ class ChatNavView extends StatelessWidget {
                     final Channel item = channels[index];
                     // log(item.)
                     log("item.extraData['name'].toString(): ${item.extraData['name'].toString()}");
-                    return GestureDetector(
-                      onTap: () {
-                        // controller.createChannel(context, _item);
-                        Get.toNamed(Routes.CHAT_SCREEN, arguments: item);
-                      },
-                      child: ChatTile(
-                        photoUrl: getChannelImage(item, context.currentUser!),
-                        unreadCount: StreamBuilder<int>(
-                          stream: item.state!.unreadCountStream,
-                          initialData: item.state!.unreadCount,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data == 0) {
-                                return const SizedBox.shrink();
-                              } else {
-                                return BadgeIndicator(
-                                  count:
-                                      '${snapshot.data! > 99 ? '99+' : snapshot.data}',
-                                );
+                    return StreamChannel(
+                      channel: item,
+                      showLoading: false,
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.CHAT_SCREEN, arguments: item);
+                        },
+                        child: ChatTile(
+                          photoUrl: getChannelImage(item, context.currentUser!),
+                          unreadCount: StreamBuilder<int>(
+                            stream: item.state!.unreadCountStream,
+                            initialData: item.state!.unreadCount,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data == 0) {
+                                  return const SizedBox.shrink();
+                                } else {
+                                  return BadgeIndicator(
+                                    count:
+                                        '${snapshot.data! > 99 ? '99+' : snapshot.data}',
+                                  );
+                                }
                               }
-                            }
 
-                            return const SizedBox();
-                          },
-                        ),
-                        userName: getChannelName(item, context.currentUser!),
-                        lastmessage: StreamBuilder<Message?>(
-                          stream: item.state!.lastMessageStream,
-                          initialData: item.state!.lastMessage,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Text(snapshot.data!.text!);
-                            }
+                              return const SizedBox();
+                            },
+                          ),
+                          userName: getChannelName(item, context.currentUser!),
+                          lastmessage: StreamBuilder<Message?>(
+                            stream: item.state!.lastMessageStream,
+                            initialData: item.state!.lastMessage,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(snapshot.data!.text!);
+                              }
 
-                            return const SizedBox();
-                          },
+                              return const SizedBox();
+                            },
+                          ),
+                          // onTap: () {
+                          //   // / Display a list of messages when the user taps on
+                          //   // / an item. We can use [StreamChannel] to wrap our
+                          //   // / [MessageScreen] screen with the selected channel.
+                          //   // /
+                          //   // / This allows us to use a built-in inherited widget
+                          //   // / for accessing our `channel` later on.
+                          //   Navigator.of(context).push(
+                          //     MaterialPageRoute(
+                          //       builder: (context) => StreamChannel(
+                          //         channel: _item,
+                          //         child: const MessageScreen(),
+                          //       ),
+                          //     ),
+                          //   );
+                          // },
                         ),
-                        // onTap: () {
-                        //   // / Display a list of messages when the user taps on
-                        //   // / an item. We can use [StreamChannel] to wrap our
-                        //   // / [MessageScreen] screen with the selected channel.
-                        //   // /
-                        //   // / This allows us to use a built-in inherited widget
-                        //   // / for accessing our `channel` later on.
-                        //   Navigator.of(context).push(
-                        //     MaterialPageRoute(
-                        //       builder: (context) => StreamChannel(
-                        //         channel: _item,
-                        //         child: const MessageScreen(),
-                        //       ),
-                        //     ),
-                        //   );
-                        // },
                       ),
                     );
                   },
