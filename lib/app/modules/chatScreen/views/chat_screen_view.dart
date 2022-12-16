@@ -1,16 +1,11 @@
-import 'dart:developer' as dev;
-
-import 'package:chat_app/app/extensions/empty_padding_extension.dart';
 import 'package:chat_app/app/extensions/stream_chat_extension.dart';
-import 'package:chat_app/app/modules/chatScreen/custom_painter/chat_bubble_painter.dart';
 import 'package:chat_app/app/modules/chatScreen/views/message_bubble.dart';
 import 'package:chat_app/widgets/chat_app_bar.dart';
 import 'package:chat_app/widgets/chat_screen_widgets/action_bar.dart';
-import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:chat_app/widgets/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
@@ -35,8 +30,18 @@ class ChatScreenView extends GetView<ChatScreenController> {
           children: [
             Expanded(
               child: MessageListCore(
-                emptyBuilder: (context) =>
-                    const Center(child: Text("No meesage")),
+                emptyBuilder: (context) => Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/svg/no_data.svg",
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      width: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                    const Text("No messages"),
+                  ],
+                )),
                 errorBuilder: (BuildContext context, Object error) =>
                     const Center(child: Text("Error")),
                 loadingBuilder: (BuildContext context) =>

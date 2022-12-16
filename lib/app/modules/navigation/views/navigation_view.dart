@@ -1,8 +1,8 @@
 import 'dart:developer';
 
+import 'package:chat_app/constants/style_constants.dart';
+import 'package:chat_app/widgets/custom_svg_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/navigation_controller.dart';
@@ -33,8 +33,11 @@ class NavigationView extends GetView<NavigationController> {
           onPressed: () {},
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
 
-          backgroundColor: Colors.amber,
-          child: Icon(Icons.add),
+          backgroundColor: StyleConstants.primaryColor,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation:
@@ -63,14 +66,11 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/call.svg",
-                      color: Colors.amber,
+                  children: const [
+                    CustomSvgWidget(
+                      path: "assets/svg/call.svg",
+                      color: StyleConstants.primaryColor,
                     ),
-                    // Text(
-                    //   'Home',
-                    // )
                   ],
                 ),
               ),
@@ -82,10 +82,9 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/chat.svg",
-                      color: Colors.amber,
+                  children: const [
+                    CustomSvgWidget(
+                      path: "assets/svg/chat.svg",
                     ),
                     // Text(
                     //   'Home',
@@ -93,7 +92,7 @@ class NavigationView extends GetView<NavigationController> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               MaterialButton(
@@ -104,11 +103,10 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/map.svg",
+                  children: const [
+                    CustomSvgWidget(
+                      path: "assets/svg/map.svg",
                       height: 25,
-                      color: Colors.amber,
                     ),
                     // Text(
                     //   'Home',
@@ -124,10 +122,9 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/status.svg",
-                      color: Colors.amber,
+                  children: const [
+                    CustomSvgWidget(
+                      path: "assets/svg/status.svg",
                       height: 30,
                     ),
                     // Text(
