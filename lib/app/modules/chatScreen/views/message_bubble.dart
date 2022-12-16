@@ -32,11 +32,16 @@ class MessageBubble extends StatelessWidget {
             child: BubbleBackground(
               colors: [
                 message.user?.id != context.currentUser?.id
-                    ? const Color(0xFF6C7689)
+                    // ? const Color(0xFF6C7689)
+                    ? const Color(0xFF19B7FF)
                     : const Color(0xFF19B7FF),
                 message.user?.id != context.currentUser?.id
-                    ? const Color(0xFF3A364B)
+                    // ? const Color(0xFF3A364B)
+                    ? Color.fromARGB(255, 9, 159, 228)
                     : const Color(0xFF491CCB),
+                // : const Color(0xFF491CCB),
+                //  Color.fromRGBO(143, 148, 251, 1),
+                // Color.fromRGBO(143, 148, 251, .6),
               ],
               child: DefaultTextStyle.merge(
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
