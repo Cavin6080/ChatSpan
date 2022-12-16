@@ -50,4 +50,10 @@ class SplashScreenController extends GetxController {
     // handleAuthenticatedState();
     super.onReady();
   }
+
+  @override
+  void onClose() {
+    listener.cancel();
+    super.onClose();
+  }
 }

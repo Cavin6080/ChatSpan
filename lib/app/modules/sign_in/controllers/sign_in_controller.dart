@@ -36,7 +36,7 @@ class SignInController extends GetxController {
   final passwordController = TextEditingController();
 
   Future<void> signIn(BuildContext context) async {
-    final streamclient = StreamChatCore.of(context).client;
+    var streamclient = StreamChatCore.of(context).client;
 
     if (registerFormKey.currentState!.validate()) {
       isLoading = true;
@@ -61,6 +61,7 @@ class SignInController extends GetxController {
             .call();
 
         // Connnect stream user
+        // streamclient.disconnectUser();
         await streamclient.connectUser(
           User(id: creds.user!.uid),
           results.data,

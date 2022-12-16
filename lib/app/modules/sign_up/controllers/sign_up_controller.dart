@@ -79,10 +79,10 @@ class SignUpController extends GetxController {
           name: usernameController.text,
           image: imageController.text,
         );
-        // await client.connectUser(
-        //   streamUser,
-        //   results.data,
-        // );
+        await client.connectUser(
+          streamUser,
+          results.data,
+        );
         await client.updateUser(streamUser);
         isLoading = false;
         // Navigate to home screen
