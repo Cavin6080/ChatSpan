@@ -4,6 +4,8 @@ import '../modules/callNav/bindings/call_nav_binding.dart';
 import '../modules/callNav/views/call_nav_view.dart';
 import '../modules/chatNav/bindings/chat_nav_binding.dart';
 import '../modules/chatNav/views/chat_nav_view.dart';
+import '../modules/chatScreen/bindings/chat_screen_binding.dart';
+import '../modules/chatScreen/views/chat_screen_view.dart';
 import '../modules/contactsNav/bindings/contacts_nav_binding.dart';
 import '../modules/contactsNav/views/contacts_nav_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.STATUS_NAV,
       page: () => const StatusNavView(),
       binding: StatusNavBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_SCREEN,
+      page: () => const ChatScreenView(),
+      binding: ChatScreenBinding(),
     ),
   ];
 }

@@ -10,6 +10,7 @@ abstract class Routes {
   static const CONTACTS_NAV = _Paths.CONTACTS_NAV;
   static const CALL_NAV = _Paths.CALL_NAV;
   static const STATUS_NAV = _Paths.STATUS_NAV;
+  static const CHAT_SCREEN = _Paths.CHAT_SCREEN;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const CONTACTS_NAV = '/contacts-nav';
   static const CALL_NAV = '/call-nav';
   static const STATUS_NAV = '/status-nav';
+  static const CHAT_SCREEN = '/chat-screen';
 }

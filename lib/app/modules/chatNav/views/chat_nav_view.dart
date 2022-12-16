@@ -1,3 +1,4 @@
+import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:chat_app/widgets/chat_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -20,11 +21,14 @@ class ChatNavView extends GetView<ChatNavController> {
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
-          return const ChatTile(
-            userName: "Cavin",
-            lastmessage:
-                "Hey buddy i was about messsage you how are you and hows everything going",
-            unreadCount: "1",
+          return InkWell(
+            onTap: () => Get.toNamed(Routes.CHAT_SCREEN),
+            child: ChatTile(
+              userName: "Cavin",
+              lastmessage:
+                  "Hey buddy i was about messsage you how are you and hows everything going",
+              unreadCount: "1",
+            ),
           );
         },
       ),
