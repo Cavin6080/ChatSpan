@@ -109,7 +109,7 @@ class TextInputField extends StatelessWidget {
                 ),
               )
             : null,
-        hintStyle: hintStyle ?? const TextStyle(color: Colors.black),
+        hintStyle: hintStyle ?? TextStyle(color: Colors.grey.shade400),
       ),
       minLines: minLines,
       maxLines: maxLines,

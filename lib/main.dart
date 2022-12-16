@@ -7,15 +7,23 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 
 import 'app/routes/app_pages.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  /// Set the chatPersistenceClient for offline support
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   final client = StreamChatClient(Constant.STREAM_KEY);
+  // client.chatPersistenceClient = StreamChatPersistenceClient(
+  //   logLevel: Level.INFO,
+  //   connectionMode: ConnectionMode.background,
+  // );
   runApp(
     MyApp(client: client),
   );
