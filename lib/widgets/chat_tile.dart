@@ -11,7 +11,7 @@ class ChatTile extends StatelessWidget {
   final String userName;
   final String? photoUrl;
   final Widget lastmessage;
-  final String unreadCount;
+  final Widget unreadCount;
   const ChatTile({
     super.key,
     required this.userName,
@@ -33,9 +33,7 @@ class ChatTile extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium,
       ),
       subtitle: lastmessage,
-      trailing: unreadCount.isEmpty
-          ? const SizedBox.shrink()
-          : BadgeIndicator(count: unreadCount),
+      trailing: unreadCount,
     );
   }
 }

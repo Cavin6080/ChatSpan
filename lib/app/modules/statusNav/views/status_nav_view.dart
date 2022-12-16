@@ -62,7 +62,7 @@ class StatusNavView extends StatelessWidget {
                           userName: _item.name,
                           lastmessage: const SizedBox.shrink(),
                           photoUrl: _item.image ?? "",
-                          unreadCount: "",
+                          unreadCount: SizedBox.shrink(),
                         ),
                       );
                     },

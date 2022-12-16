@@ -27,7 +27,7 @@ class ChatNavView extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
-        actions: [ProfileImage(), 10.pw],
+        actions: [const ProfileImage(), 10.pw],
       ),
       body: PagedValueListenableBuilder<int, Channel>(
         valueListenable: controller.streamChannelListController,
@@ -43,15 +43,11 @@ class ChatNavView extends StatelessWidget {
                   }
                 },
                 child: ListView.builder(
-                  /// We're using the channels length when there are no more
-                  /// pages to load and there are no errors with pagination.
-                  /// In case we need to show a loading indicator or and error
-                  /// tile we're increasing the count by 1.
                   itemCount: (nextPageKey != null || error != null)
                       ? channels.length + 1
                       : channels.length,
                   itemBuilder: (BuildContext context, int index) {
-                    log("indexL : ${index}");
+                    // log("indexL : ${index}");
                     if (index == channels.length) {
                       if (error != null) {
                         return TextButton(
@@ -74,7 +70,24 @@ class ChatNavView extends StatelessWidget {
                       },
                       child: ChatTile(
                         photoUrl: getChannelImage(item, context.currentUser!),
-                        unreadCount: "1",
+                        unreadCount: StreamBuilder<int>(
+                          stream: item.state!.unreadCountStream,
+                          initialData: item.state!.unreadCount,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data == 0) {
+                                return const SizedBox.shrink();
+                              } else {
+                                return BadgeIndicator(
+                                  count:
+                                      '${snapshot.data! > 99 ? '99+' : snapshot.data}',
+                                );
+                              }
+                            }
+
+                            return const SizedBox();
+                          },
+                        ),
                         userName: getChannelName(item, context.currentUser!),
                         lastmessage: StreamBuilder<Message?>(
                           stream: item.state!.lastMessageStream,
