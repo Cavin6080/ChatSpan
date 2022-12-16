@@ -9,10 +9,10 @@ class ContactsNavView extends GetView<ContactsNavController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ContactsNavView'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('ContactsNavView'),
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: Text(
           'ContactsNavView is working',

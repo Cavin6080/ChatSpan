@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:star_menu/star_menu.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class ChatScreenController extends GetxController {

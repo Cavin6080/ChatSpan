@@ -21,10 +21,6 @@ class StatusNavView extends StatelessWidget {
         blur: 2,
         progressIndicator: loadingIndicator,
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('StatusNavView'),
-            centerTitle: true,
-          ),
           body: PagedValueListenableBuilder<int, User>(
             valueListenable: controller.userListController,
             builder: (context, value, child) {

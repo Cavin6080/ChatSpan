@@ -27,7 +27,7 @@ getSnackBar(String message, SNACK type, {String? title}) {
 }
 
 final loadingIndicator = LoadingAnimationWidget.fourRotatingDots(
-  color: Colors.blue,
+  color: const Color.fromRGBO(143, 148, 251, .6),
   size: 60,
 );
 

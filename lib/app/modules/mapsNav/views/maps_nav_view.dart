@@ -9,10 +9,10 @@ class MapsNavView extends GetView<MapsNavController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MapsNavView'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('MapsNavView'),
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: Text(
           'MapsNavView is working',

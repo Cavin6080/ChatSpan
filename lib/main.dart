@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Application",
-      initialRoute: Routes.SPLASH_SCREEN,
+      initialRoute: Routes.ONBOARDING,
       debugShowCheckedModeBanner: false,
       // initialRoute: AppPages.INITIAL,
       initialBinding: InitialBinding(),

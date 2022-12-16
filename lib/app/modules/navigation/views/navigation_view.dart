@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,6 +22,30 @@ class NavigationView extends GetView<NavigationController> {
       //   centerTitle: true,
       //   leading: const SizedBox(),
       // ),
+      appBar: AppBar(
+        leading: const SizedBox.shrink(),
+        title: Obx(
+          () => Text(
+            controller.currPage.value == 0
+                ? 'Call'
+                : controller.currPage.value == 1
+                    ? "Chat"
+                    : controller.currPage.value == 2
+                        ? "Maps"
+                        : "Status",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          Obx(
+            () => controller.currPage.value == 1
+                ? const ProfileImage()
+                : const SizedBox(),
+          ),
+          10.pw
+        ],
+      ),
       // body: resizeToAvoidBottomInset: false,
       body: Obx(() => PageStorage(
             bucket: bucket,

@@ -9,10 +9,10 @@ class CallNavView extends GetView<CallNavController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('CallNavView'),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   title: const Text('CallNavView'),
+      //   centerTitle: true,
+      // ),
       body: Center(
         child: Text(
           'CallNavView is working',

@@ -19,6 +19,7 @@ class SignInView extends GetView<SignInController> {
     return Obx(
       () => ModalProgressHUD(
         inAsyncCall: controller.isLoading,
+        blur: 3,
         progressIndicator: loadingIndicator,
         child: Scaffold(
           backgroundColor: Colors.white,

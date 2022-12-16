@@ -10,8 +10,10 @@ import 'package:chat_app/widgets/custom_text_field.dart';
 import 'package:chat_app/widgets/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import 'package:get/get.dart';
+import 'package:star_menu/star_menu.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../controllers/chat_screen_controller.dart';
@@ -36,7 +38,7 @@ class ChatScreenView extends GetView<ChatScreenController> {
             Expanded(
               child: MessageListCore(
                 emptyBuilder: (context) =>
-                    const Center(child: Text("No meesage")),
+                    const Center(child: Text("Start Messeging")),
                 errorBuilder: (BuildContext context, Object error) =>
                     const Center(child: Text("Error")),
                 loadingBuilder: (BuildContext context) =>
@@ -49,9 +51,46 @@ class ChatScreenView extends GetView<ChatScreenController> {
                       if (index < messages.length) {
                         final message = messages[index];
 
-                        return MessageBubble(
-                          message: message,
-                          child: Text(message.text ?? ""),
+                        return AnimationConfiguration.staggeredList(
+                          duration: const Duration(milliseconds: 375),
+                          position: index,
+                          child: GestureDetector(
+                            onLongPress: () {
+                              // Get.bottomSheet(ListView());
+                              // Get.dialog(Container());
+                              // StarMenuController().openMenu!();
+                              // StarMenu(
+                              //   params: StarMenuParameters(),
+                              //   controller: StarMenuController(),
+                              //   items: [
+                              //     Container(
+                              //       height: 20,
+                              //       color: Colors.black,
+                              //     ),
+                              //     Container(
+                              //       height: 20,
+                              //       color: Colors.green,
+                              //     ),
+                              //     Container(
+                              //       height: 20,
+                              //       color: Colors.red,
+                              //     ),
+                              //     Container(
+                              //       height: 20,
+                              //       color: Colors.amber,
+                              //     ),
+                              //   ],
+                              //   child: Container(
+                              //     height: 30,
+                              //     color: Colors.blueGrey,
+                              //   ),
+                              // );
+                            },
+                            child: MessageBubble(
+                              message: message,
+                              child: Text(message.text ?? ""),
+                            ),
+                          ),
                         );
                       }
                       return const SizedBox();
@@ -60,10 +99,20 @@ class ChatScreenView extends GetView<ChatScreenController> {
                 },
               ),
             ),
-            const ActionBar(),
+            ActionBar(),
           ],
         ),
       ),
     );
   }
 }
+
+// class MyWidget extends StatelessWidget {
+//   const MyWidget({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final logic = Get.find<ChatScreenController>();
+//     return ;
+//   }
+// }
