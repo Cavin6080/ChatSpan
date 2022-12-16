@@ -9,8 +9,8 @@ class ChatNavController extends GetxController {
   @override
   void onInit() {
     log("message init chat navigation");
-    log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).client}");
-    log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).currentUser!.id}");
+    // log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).client}");
+    // log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).currentUser!.id}");
     streamChannelListController = StreamChannelListController(
       client: StreamChatCore.of(Get.context!).client,
       filter: Filter.and(

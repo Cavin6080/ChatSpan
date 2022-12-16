@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
@@ -14,7 +15,9 @@ class SplashScreenController extends GetxController {
     super.onInit();
   }
 
-  Future<void> handleAuthenticatedState() async {
+  Future<void> handleAuthenticatedState(BuildContext context) async {
+    final client = StreamChatCore.of(context).client;
+
     final auth = firebase.FirebaseAuth.instance;
     listener = auth.authStateChanges().listen(
       (user) async {
@@ -28,7 +31,6 @@ class SplashScreenController extends GetxController {
             Future.delayed(const Duration(milliseconds: 700)),
           ]);
           // connect Stream user
-          final client = StreamChatCore.of(Get.context!).client;
           await client.connectUser(
             User(id: user.uid),
             results[0]!.data,
@@ -37,7 +39,7 @@ class SplashScreenController extends GetxController {
           Get.offAndToNamed(Routes.NAVIGATION);
         } else {
           //go to signin
-          Get.toNamed(Routes.SIGN_IN);
+          Get.offAndToNamed(Routes.SIGN_IN);
         }
       },
     );
@@ -45,7 +47,7 @@ class SplashScreenController extends GetxController {
 
   @override
   void onReady() {
-    handleAuthenticatedState();
+    // handleAuthenticatedState();
     super.onReady();
   }
 }

@@ -14,12 +14,16 @@ class SplashScreenView extends GetView<SplashScreenController> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: Text(
-              'Splash Screen',
-              style: TextStyle(fontSize: 20),
-            ),
-          ),
+          FutureBuilder<void>(
+              future: logic.handleAuthenticatedState(context),
+              builder: (context, snapshot) {
+                return Center(
+                  child: Text(
+                    'Splash Screen',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                );
+              }),
         ],
       ),
     );

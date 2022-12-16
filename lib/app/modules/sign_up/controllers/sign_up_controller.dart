@@ -38,6 +38,8 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signUp(BuildContext context) async {
+    final client = StreamChatCore.of(context).client;
+
     if (registerFormKey.currentState!.validate()) {
       isLoading = true;
       try {
@@ -52,15 +54,19 @@ class SignUpController extends GetxController {
           getSnackBar("User is empty", SNACK.FAILED);
           return;
         }
+        // log("creds.user: ${creds.user?.displayName ?? ""}");
+        // log("before future: ${usernameController.text}");
+        // // Set Firebase display name and profile picture
+        // List<Future<void>> futures = [
+        //   creds.user!.updateDisplayName(usernameController.text),
+        //   if (imageController.text.isNotEmpty)
+        //     creds.user!.updatePhotoURL(imageController.text)
+        // ];
 
-        // Set Firebase display name and profile picture
-        List<Future<void>> futures = [
-          creds.user!.updateDisplayName(usernameController.text),
-          if (imageController.text.isNotEmpty)
-            creds.user!.updatePhotoURL(imageController.text)
-        ];
-
-        await Future.wait(futures);
+        // await Future.wait(futures);
+        // log("creds.user: ${creds.user?.displayName ?? ""}");
+        await creds.user!.updateDisplayName(usernameController.text);
+        await creds.user!.updatePhotoURL(imageController.text);
 
         // Create Stream user and get token using Firebase Functions
         final results = await functions
@@ -68,16 +74,15 @@ class SignUpController extends GetxController {
             .call();
 
         // Connect user to Stream and set user data
-        final client = StreamChatCore.of(context).client;
         final streamUser = User(
           id: creds.user!.uid,
           name: usernameController.text,
           image: imageController.text,
         );
-        await client.connectUser(
-          streamUser,
-          results.data,
-        );
+        // await client.connectUser(
+        //   streamUser,
+        //   results.data,
+        // );
         await client.updateUser(streamUser);
         isLoading = false;
         // Navigate to home screen
