@@ -1,3 +1,4 @@
+import 'package:chat_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -19,11 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Application",
+      initialRoute: Routes.NAVIGATION,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      initialRoute: AppPages.INITIAL,
+      // initialRoute: AppPages.INITIAL,
+      // initialBinding: InitialBinding(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       getPages: AppPages.routes,
     );
   }
