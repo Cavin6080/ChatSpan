@@ -46,6 +46,8 @@ class ChatScreenApBar extends StatelessWidget implements PreferredSizeWidget {
               Text(
                 userName,
                 style: Theme.of(context).textTheme.bodyMedium,
+                overflow: TextOverflow.fade,
+                maxLines: 1,
               ),
               BetterStreamBuilder<List<Member>>(
                 stream: channel.state!.membersStream,

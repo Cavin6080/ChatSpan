@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/route_manager.dart';
 
 class ChatTile extends StatelessWidget {
   final String userName;
@@ -34,6 +31,7 @@ class ChatTile extends StatelessWidget {
       title: Text(
         userName,
         style: Theme.of(context).textTheme.bodyMedium,
+        overflow: TextOverflow.fade,
       ),
       subtitle: lastmessage,
       trailing: unreadCount,

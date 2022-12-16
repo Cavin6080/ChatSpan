@@ -1,3 +1,4 @@
+import 'package:chat_app/constants/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -27,7 +28,7 @@ getSnackBar(String message, SNACK type, {String? title}) {
 }
 
 final loadingIndicator = LoadingAnimationWidget.fourRotatingDots(
-  color: const Color.fromRGBO(143, 148, 251, .6),
+  color: StyleConstants.primaryColor,
   size: 60,
 );
 
