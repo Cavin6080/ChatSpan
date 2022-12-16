@@ -14,6 +14,8 @@ import '../modules/mapsNav/bindings/maps_nav_binding.dart';
 import '../modules/mapsNav/views/maps_nav_view.dart';
 import '../modules/navigation/bindings/navigation_binding.dart';
 import '../modules/navigation/views/navigation_view.dart';
+import '../modules/select_user/bindings/select_user_binding.dart';
+import '../modules/select_user/views/select_user_view.dart';
 import '../modules/statusNav/bindings/status_nav_binding.dart';
 import '../modules/statusNav/views/status_nav_view.dart';
 
@@ -64,6 +66,11 @@ class AppPages {
       name: _Paths.CHAT_SCREEN,
       page: () => const ChatScreenView(),
       binding: ChatScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELECT_USER,
+      page: () => const SelectUserView(),
+      binding: SelectUserBinding(),
     ),
   ];
 }

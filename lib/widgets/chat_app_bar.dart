@@ -17,7 +17,7 @@ class ChatScreenApBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: Theme.of(context).iconTheme,
       centerTitle: false,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       elevation: 0,
       leadingWidth: 50,
       leading: Align(
