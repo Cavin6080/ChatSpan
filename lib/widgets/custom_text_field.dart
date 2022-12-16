@@ -11,6 +11,8 @@ class TextInputField extends StatelessWidget {
   final int? maxLength;
   final EdgeInsetsGeometry? contentPadding;
   final String hinttext;
+  final TextInputAction? textInputAction;
+
   final int minLines;
   final int maxLines;
   final TextInputType? textInputType;
@@ -27,6 +29,7 @@ class TextInputField extends StatelessWidget {
     this.onChanged,
     this.enabled,
     this.hintStyle,
+    this.textInputAction,
     required this.hinttext,
     this.contentPadding,
     this.enabledBorder,
@@ -53,8 +56,9 @@ class TextInputField extends StatelessWidget {
       validator: validator ?? MultiValidator([]),
       onChanged: onChanged,
       obscureText: obscureText ?? false,
+      textInputAction: textInputAction,
       obscuringCharacter: '*',
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       controller: editingController,
       keyboardType: textInputType ?? TextInputType.text,
       cursorColor: const Color(0xFF2B547E),
@@ -105,7 +109,7 @@ class TextInputField extends StatelessWidget {
                   (obscureText ?? false)
                       ? Icons.visibility
                       : Icons.visibility_off,
-                  color: Colors.black,
+                  color: const Color.fromRGBO(143, 148, 251, 1),
                 ),
               )
             : null,

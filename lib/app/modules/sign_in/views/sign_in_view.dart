@@ -138,6 +138,7 @@ class SignInView extends GetView<SignInController> {
                                     editingController:
                                         controller.emailController,
                                     textInputType: TextInputType.emailAddress,
+                                    textInputAction: TextInputAction.next,
                                     validator:
                                         controller.formValidations?.validation(
                                       type: "email",
@@ -161,10 +162,11 @@ class SignInView extends GetView<SignInController> {
                                       enabledBorder: InputBorder.none,
                                       errorBorder: InputBorder.none,
                                       // maxLines: 1,
-                                      contentPadding:
-                                          EdgeInsets.only(top: 10, left: 10),
+                                      contentPadding: const EdgeInsets.only(
+                                          top: 10, left: 10),
                                       editingController:
                                           controller.passwordController,
+                                      textInputAction: TextInputAction.done,
                                       textInputType: TextInputType.text,
                                       obscureText: controller.obscureText,
                                       onTogglePassword: () =>
@@ -214,7 +216,8 @@ class SignInView extends GetView<SignInController> {
                       FadeAnimation(
                         1.5,
                         GestureDetector(
-                          onTap: () => Get.toNamed(Routes.SIGN_UP),
+                          onTap: () => Get.offAndToNamed(Routes.SIGN_UP),
+                          // onTap: () => Get.toNamed(Routes.SIGN_UP),
                           child: const Text(
                             "Sign Up",
                             style: TextStyle(
