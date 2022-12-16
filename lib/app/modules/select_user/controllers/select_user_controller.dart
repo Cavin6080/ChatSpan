@@ -13,15 +13,20 @@ class SelectUserController extends GetxController {
   get isLoading => _isLoading.value;
   set isLoading(value) => _isLoading.value = value;
 
+  /// this method is for creating users
   Future<void> onSubmit(BuildContext context, UserModel user) async {
     try {
       final client = StreamChatCore.of(context).client;
       isLoading = true;
       await client.connectUser(
-        User(id: user.id, extraData: {
-          "name": user.name,
-          "image": user.photoURL,
-        }),
+        User(
+          id: user.id,
+          name: user.name,
+          extraData: {
+            "name": user.name,
+            "image": user.photoURL,
+          },
+        ),
         client.devToken(Constant.STREAM_KEY).rawValue,
       );
       isLoading = false;

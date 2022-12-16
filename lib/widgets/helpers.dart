@@ -21,11 +21,11 @@ getSnackBar(String message, SNACK type, {String? title}) {
           fontWeight: FontWeight.normal,
         ),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
       margin: const EdgeInsets.all(0));
 }
 
 final loadingIndicator = LoadingAnimationWidget.fourRotatingDots(
   color: Colors.blue,
-  size: 50,
+  size: 60,
 );

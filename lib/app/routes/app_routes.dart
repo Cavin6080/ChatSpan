@@ -12,6 +12,7 @@ abstract class Routes {
   static const STATUS_NAV = _Paths.STATUS_NAV;
   static const CHAT_SCREEN = _Paths.CHAT_SCREEN;
   static const SELECT_USER = _Paths.SELECT_USER;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const STATUS_NAV = '/status-nav';
   static const CHAT_SCREEN = '/chat-screen';
   static const SELECT_USER = '/select-user';
+  static const PROFILE = '/profile';
 }

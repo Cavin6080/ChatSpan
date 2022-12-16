@@ -1,5 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/app/extensions/stream_chat_extension.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:chat_app/widgets/chat_tile.dart';
+import 'package:chat_app/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,18 +16,20 @@ class ChatNavView extends GetView<ChatNavController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const SizedBox.shrink(),
         title: Text(
           'Chat',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         centerTitle: true,
+        actions: [ProfileImage(), 10.pw],
       ),
       body: ListView.builder(
         itemCount: 5,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () => Get.toNamed(Routes.CHAT_SCREEN),
-            child: ChatTile(
+            child: const ChatTile(
               userName: "Cavin",
               lastmessage:
                   "Hey buddy i was about messsage you how are you and hows everything going",

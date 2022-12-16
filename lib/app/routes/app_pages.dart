@@ -14,6 +14,8 @@ import '../modules/mapsNav/bindings/maps_nav_binding.dart';
 import '../modules/mapsNav/views/maps_nav_view.dart';
 import '../modules/navigation/bindings/navigation_binding.dart';
 import '../modules/navigation/views/navigation_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/select_user/bindings/select_user_binding.dart';
 import '../modules/select_user/views/select_user_view.dart';
 import '../modules/statusNav/bindings/status_nav_binding.dart';
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.SELECT_USER,
       page: () => const SelectUserView(),
       binding: SelectUserBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }
