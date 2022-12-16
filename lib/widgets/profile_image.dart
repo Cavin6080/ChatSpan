@@ -25,9 +25,12 @@ class ProfileImage extends StatelessWidget {
                   CachedNetworkImageProvider(context.currentUserImage!),
             ),
           )
-        : const CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.blue,
+        : GestureDetector(
+            onTap: onTap ?? () => Get.toNamed(Routes.PROFILE),
+            child: const CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.blue,
+            ),
           );
   }
 }

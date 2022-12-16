@@ -1,4 +1,5 @@
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/app/extensions/stream_chat_extension.dart';
 import 'package:chat_app/widgets/helpers.dart';
 import 'package:chat_app/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class ProfileView extends GetView<ProfileController> {
               const Center(
                 child: ProfileImage(size: 40),
               ),
+              Text(context.currentUser?.name ?? ""),
               TextButton(
                 onPressed: () => controller.logout(context),
                 child: const Text("LogOut"),

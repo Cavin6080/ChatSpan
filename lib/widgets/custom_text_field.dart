@@ -40,7 +40,7 @@ class TextInputField extends StatelessWidget {
     this.prefixIcon,
     this.iconName,
     this.minLines = 1,
-    this.maxLines = 2,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override

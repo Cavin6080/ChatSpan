@@ -5,6 +5,7 @@ import 'package:chat_app/widgets/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 
 class ProfileController extends GetxController {
   final _isLoading = false.obs;
@@ -15,8 +16,10 @@ class ProfileController extends GetxController {
     try {
       isLoading = true;
       await StreamChatCore.of(context).client.disconnectUser();
+      await firebase.FirebaseAuth.instance.signOut();
+
       isLoading = false;
-      Get.offAllNamed(Routes.SELECT_USER);
+      Get.offAllNamed(Routes.SIGN_IN);
     } catch (e) {
       log(e.toString());
       getSnackBar(
