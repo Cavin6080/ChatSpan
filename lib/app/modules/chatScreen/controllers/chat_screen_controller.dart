@@ -1,23 +1,13 @@
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class ChatScreenController extends GetxController {
-  //TODO: Implement ChatScreenController
-
-  final count = 0.obs;
+  late final Channel channel;
   @override
   void onInit() {
+    if (Get.arguments != null) {
+      channel = Get.arguments;
+    }
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

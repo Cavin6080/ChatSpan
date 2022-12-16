@@ -1,4 +1,5 @@
 import 'package:chat_app/constants/constants.dart';
+import 'package:chat_app/initial_bindings.dart';
 import 'package:chat_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: Routes.SELECT_USER,
       debugShowCheckedModeBanner: false,
       // initialRoute: AppPages.INITIAL,
-      // initialBinding: InitialBinding(),
+      initialBinding: InitialBinding(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,

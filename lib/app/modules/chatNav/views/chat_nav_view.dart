@@ -1,17 +1,22 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
 import 'package:chat_app/app/extensions/stream_chat_extension.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:chat_app/widgets/chat_tile.dart';
+import 'package:chat_app/widgets/helpers.dart';
 import 'package:chat_app/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../controllers/chat_nav_controller.dart';
 
-class ChatNavView extends GetView<ChatNavController> {
-  const ChatNavView({Key? key}) : super(key: key);
+class ChatNavView extends StatelessWidget {
+  final controller = Get.find<ChatNavController>();
+  ChatNavView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,16 +29,94 @@ class ChatNavView extends GetView<ChatNavController> {
         centerTitle: true,
         actions: [ProfileImage(), 10.pw],
       ),
-      body: ListView.builder(
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () => Get.toNamed(Routes.CHAT_SCREEN),
-            child: const ChatTile(
-              userName: "Cavin",
-              lastmessage:
-                  "Hey buddy i was about messsage you how are you and hows everything going",
-              unreadCount: "1",
+      body: PagedValueListenableBuilder<int, Channel>(
+        valueListenable: controller.streamChannelListController,
+        builder: (context, value, child) {
+          return value.when(
+            (channels, nextPageKey, error) {
+              log("channels.length: ${channels.length}");
+              return LazyLoadScrollView(
+                onEndOfPage: () async {
+                  if (nextPageKey != null) {
+                    controller.streamChannelListController
+                        .loadMore(nextPageKey);
+                  }
+                },
+                child: ListView.builder(
+                  /// We're using the channels length when there are no more
+                  /// pages to load and there are no errors with pagination.
+                  /// In case we need to show a loading indicator or and error
+                  /// tile we're increasing the count by 1.
+                  itemCount: (nextPageKey != null || error != null)
+                      ? channels.length + 1
+                      : channels.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    log("indexL : ${index}");
+                    if (index == channels.length) {
+                      if (error != null) {
+                        return TextButton(
+                          onPressed: () {
+                            controller.streamChannelListController.retry();
+                          },
+                          child: Text(error.message),
+                        );
+                      }
+                      return loadingIndicator;
+                    }
+
+                    final Channel item = channels[index];
+                    // log(item.)
+                    log("item.extraData['name'].toString(): ${item.extraData['name'].toString()}");
+                    return GestureDetector(
+                      onTap: () {
+                        // controller.createChannel(context, _item);
+                        Get.toNamed(Routes.CHAT_SCREEN, arguments: item);
+                      },
+                      child: ChatTile(
+                        photoUrl: getChannelImage(item, context.currentUser!),
+                        unreadCount: "1",
+                        userName: getChannelName(item, context.currentUser!),
+                        lastmessage: StreamBuilder<Message?>(
+                          stream: item.state!.lastMessageStream,
+                          initialData: item.state!.lastMessage,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Text(snapshot.data!.text!);
+                            }
+
+                            return const SizedBox();
+                          },
+                        ),
+                        // onTap: () {
+                        //   // / Display a list of messages when the user taps on
+                        //   // / an item. We can use [StreamChannel] to wrap our
+                        //   // / [MessageScreen] screen with the selected channel.
+                        //   // /
+                        //   // / This allows us to use a built-in inherited widget
+                        //   // / for accessing our `channel` later on.
+                        //   Navigator.of(context).push(
+                        //     MaterialPageRoute(
+                        //       builder: (context) => StreamChannel(
+                        //         channel: _item,
+                        //         child: const MessageScreen(),
+                        //       ),
+                        //     ),
+                        //   );
+                        // },
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+            loading: () => Center(
+              child: loadingIndicator,
+            ),
+            error: (e) => Center(
+              child: Text(
+                'Oh no, something went wrong. '
+                'Please check your config. $e',
+              ),
             ),
           );
         },
@@ -41,3 +124,22 @@ class ChatNavView extends GetView<ChatNavController> {
     );
   }
 }
+
+
+
+
+
+// ListView.builder(
+//           itemCount: 5,
+//           itemBuilder: (context, index) {
+//             return InkWell(
+//               onTap: () => Get.toNamed(Routes.CHAT_SCREEN),
+//               child: const ChatTile(
+//                 userName: "Cavin",
+//                 lastmessage:
+//                     "Hey buddy i was about messsage you how are you and hows everything going",
+//                 unreadCount: "1",
+//               ),
+//             );
+//           },
+//         )

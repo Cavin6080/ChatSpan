@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chat_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -6,11 +9,13 @@ import 'package:get/route_manager.dart';
 
 class ChatTile extends StatelessWidget {
   final String userName;
-  final String lastmessage;
+  final String? photoUrl;
+  final Widget lastmessage;
   final String unreadCount;
   const ChatTile({
     super.key,
     required this.userName,
+    this.photoUrl,
     required this.lastmessage,
     required this.unreadCount,
   });
@@ -18,20 +23,19 @@ class ChatTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const CircleAvatar(
+      leading: CircleAvatar(
         radius: Constant.avtarRadius,
+        backgroundImage:
+            photoUrl != null ? CachedNetworkImageProvider(photoUrl!) : null,
       ),
       title: Text(
         userName,
         style: Theme.of(context).textTheme.bodyMedium,
       ),
-      subtitle: Text(
-        lastmessage,
-        style: Theme.of(context).textTheme.bodySmall,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-      ),
-      trailing: BadgeIndicator(count: unreadCount),
+      subtitle: lastmessage,
+      trailing: unreadCount.isEmpty
+          ? const SizedBox.shrink()
+          : BadgeIndicator(count: unreadCount),
     );
   }
 }

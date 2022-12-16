@@ -1,11 +1,17 @@
+import 'dart:developer' as dev;
+
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/app/extensions/stream_chat_extension.dart';
 import 'package:chat_app/app/modules/chatScreen/custom_painter/chat_bubble_painter.dart';
 import 'package:chat_app/widgets/chat_app_bar.dart';
+import 'package:chat_app/widgets/chat_screen_widgets/action_bar.dart';
 import 'package:chat_app/widgets/custom_text_field.dart';
+import 'package:chat_app/widgets/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../controllers/chat_screen_controller.dart';
 
@@ -19,30 +25,65 @@ class ChatScreenView extends GetView<ChatScreenController> {
   const ChatScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final data = MessageGenerator.generate(60, 1337);
+    // final data = MessageGenerator.generate(60, 1337);
 
-    return Scaffold(
-      appBar: const ChatScreenApBar(photoUrl: "", userName: "Cavin"),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              reverse: true,
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final message = data[index];
-                return MessageBubble(
-                  message: message,
-                  child: Text(message.text),
-                );
-              },
+    return StreamChannel(
+      channel: controller.channel,
+      child: Scaffold(
+        appBar: ChatScreenApBar(
+          photoUrl: getChannelImage(controller.channel, context.currentUser!),
+          userName: getChannelName(
+            controller.channel,
+            context.currentUser!,
+          ),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: MessageListCore(
+                emptyBuilder: (context) =>
+                    const Center(child: Text("No meesage")),
+                errorBuilder: (BuildContext context, Object error) =>
+                    const Center(child: Text("Error")),
+                loadingBuilder: (BuildContext context) =>
+                    Center(child: loadingIndicator),
+                messageListBuilder: (ctx, messages) {
+                  // return SizedBox();
+                  return ListView.builder(
+                    reverse: true,
+                    itemCount: messages.length + 1,
+                    itemBuilder: (context, index) {
+                      // dev.log("range: $index");
+                      // dev.log("messageasdsa: ${messages[index]}}");
+                      if (index < messages.length) {
+                        final message = messages[index];
+
+                        return MessageBubble(
+                          message: message,
+                          child: Text(message.text ?? ""),
+                        );
+                      }
+                      return SizedBox();
+                    },
+                  );
+                },
+              ),
+              // child: ListView.builder(
+              //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+              //   reverse: true,
+              //   itemCount: data.length,
+              //   itemBuilder: (context, index) {
+              //     final message = data[index];
+              //     return MessageBubble(
+              //       message: message,
+              //       child: Text(message.text),
+              //     );
+              //   },
+              // ),
             ),
-          ),
-          TextInputField(
-            hinttext: 'Enter your message here',
-          ),
-        ],
+            ActionBar(),
+          ],
+        ),
       ),
     );
   }
@@ -61,8 +102,9 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final messageAlignment =
-        message.isMine ? Alignment.topLeft : Alignment.topRight;
+    final messageAlignment = message.user?.id != context.currentUser?.id
+        ? Alignment.topLeft
+        : Alignment.topRight;
 
     return FractionallySizedBox(
       alignment: messageAlignment,
@@ -75,10 +117,10 @@ class MessageBubble extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             child: BubbleBackground(
               colors: [
-                message.isMine
+                message.user?.id != context.currentUser?.id
                     ? const Color(0xFF6C7689)
                     : const Color(0xFF19B7FF),
-                message.isMine
+                message.user?.id != context.currentUser?.id
                     ? const Color(0xFF3A364B)
                     : const Color(0xFF491CCB),
               ],
@@ -121,61 +163,4 @@ class BubbleBackground extends StatelessWidget {
       child: child,
     );
   }
-}
-
-enum MessageOwner { myself, other }
-
-@immutable
-class Message {
-  const Message({
-    required this.owner,
-    required this.text,
-  });
-
-  final MessageOwner owner;
-  final String text;
-
-  bool get isMine => owner == MessageOwner.myself;
-}
-
-class MessageGenerator {
-  static List<Message> generate(int count, [int? seed]) {
-    final random = Random(seed);
-    return List.unmodifiable(List<Message>.generate(count, (index) {
-      return Message(
-        owner: random.nextBool() ? MessageOwner.myself : MessageOwner.other,
-        text: _exampleData[random.nextInt(_exampleData.length)],
-      );
-    }));
-  }
-
-  static final _exampleData = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'In tempus mauris at velit egestas, sed blandit felis ultrices.',
-    'Ut molestie mauris et ligula finibus iaculis.',
-    'Sed a tempor ligula.',
-    'Test',
-    'Phasellus ullamcorper, mi ut imperdiet consequat, nibh augue condimentum nunc, vitae molestie massa augue nec erat.',
-    'Donec scelerisque, erat vel placerat facilisis, eros turpis egestas nulla, a sodales elit nibh et enim.',
-    'Mauris quis dignissim neque. In a odio leo. Aliquam egestas egestas tempor. Etiam at tortor metus.',
-    'Quisque lacinia imperdiet faucibus.',
-    'Proin egestas arcu non nisl laoreet, vitae iaculis enim volutpat. In vehicula convallis magna.',
-    'Phasellus at diam a sapien laoreet gravida.',
-    'Fusce maximus fermentum sem a scelerisque.',
-    'Nam convallis sapien augue, malesuada aliquam dui bibendum nec.',
-    'Quisque dictum tincidunt ex non lobortis.',
-    'In hac habitasse platea dictumst.',
-    'Ut pharetra ligula libero, sit amet imperdiet lorem luctus sit amet.',
-    'Sed ex lorem, lacinia et varius vitae, sagittis eget libero.',
-    'Vestibulum scelerisque velit sed augue ultricies, ut vestibulum lorem luctus.',
-    'Pellentesque et risus pretium, egestas ipsum at, facilisis lectus.',
-    'Praesent id eleifend lacus.',
-    'Fusce convallis eu tortor sit amet mattis.',
-    'Vivamus lacinia magna ut urna feugiat tincidunt.',
-    'Sed in diam ut dolor imperdiet vehicula non ac turpis.',
-    'Praesent at est hendrerit, laoreet tortor sed, varius mi.',
-    'Nunc in odio leo.',
-    'Praesent placerat semper libero, ut aliquet dolor.',
-    'Vestibulum elementum leo metus, vitae auctor lorem tincidunt ut.',
-  ];
 }

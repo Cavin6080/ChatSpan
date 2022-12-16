@@ -41,7 +41,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHAT_NAV,
-      page: () => const ChatNavView(),
+      page: () => ChatNavView(),
       binding: ChatNavBinding(),
     ),
     GetPage(
@@ -61,7 +61,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.STATUS_NAV,
-      page: () => const StatusNavView(),
+      page: () => StatusNavView(),
       binding: StatusNavBinding(),
     ),
     GetPage(

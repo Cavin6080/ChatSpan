@@ -16,7 +16,7 @@ class ProfileController extends GetxController {
       isLoading = true;
       await StreamChatCore.of(context).client.disconnectUser();
       isLoading = false;
-      Get.toNamed(Routes.SELECT_USER);
+      Get.offAllNamed(Routes.SELECT_USER);
     } catch (e) {
       log(e.toString());
       getSnackBar(
