@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import '../controllers/maps_nav_controller.dart';
 
@@ -14,10 +15,7 @@ class MapsNavView extends GetView<MapsNavController> {
       //   centerTitle: true,
       // ),
       body: Center(
-        child: Text(
-          'MapsNavView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+        child: Lottie.asset("assets/lottie/coming_soon_1.json"),
       ),
     );
   }

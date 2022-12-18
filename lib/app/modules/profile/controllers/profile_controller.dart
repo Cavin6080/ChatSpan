@@ -11,6 +11,9 @@ class ProfileController extends GetxController {
   final _isLoading = false.obs;
   get isLoading => _isLoading.value;
   set isLoading(value) => _isLoading.value = value;
+  final _isParticle = false.obs;
+  get isParticle => _isParticle.value;
+  set isParticle(value) => _isParticle.value = value;
 
   logout(BuildContext context) async {
     try {

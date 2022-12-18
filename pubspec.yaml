@@ -31,6 +31,11 @@ dependencies:
   star_menu: ^3.1.0+1
   concentric_transition: ^1.0.3
   stream_chat_flutter: ^5.1.0
+  emoji_picker_flutter: ^1.5.1
+  flutter_slidable: ^2.0.0
+  lottie: ^1.4.3
+  animated_text_kit: ^4.2.2
+  fade_out_particle: ^1.2.1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
@@ -43,4 +48,5 @@ flutter:
   assets:
     - assets/svg/    
     - assets/png/    
+    - assets/lottie/    
 

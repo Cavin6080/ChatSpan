@@ -1,4 +1,5 @@
 import 'package:chat_app/animation/fade_animation.dart';
+import 'package:chat_app/animation/scale_animation.dart';
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
 import 'package:chat_app/app/extensions/image_path_extension.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
@@ -259,7 +260,7 @@ class SignUpView extends GetView<SignUpController> {
                       ),
                       FadeAnimation(
                         1.5,
-                        GestureDetector(
+                        CustomAnimatedScale(
                           // onTap: () => Get.back(),
                           onTap: () => Get.offAndToNamed(Routes.SIGN_IN),
                           child: const Text(

@@ -1,6 +1,9 @@
+import 'package:chat_app/animation/scale_animation.dart';
+import 'package:chat_app/app/modules/chatScreen/controllers/chat_screen_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class ActionBar extends StatefulWidget {
@@ -11,7 +14,8 @@ class ActionBar extends StatefulWidget {
 }
 
 class _ActionBarState extends State<ActionBar> {
-  final TextEditingController controller = TextEditingController();
+  late final TextEditingController controller;
+  late ChatScreenController chatScreenController;
 
   Future<void> _sendMessage() async {
     if (controller.text.isNotEmpty) {
@@ -26,8 +30,15 @@ class _ActionBarState extends State<ActionBar> {
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    chatScreenController = Get.find<ChatScreenController>();
+    controller = chatScreenController.controller;
+    super.initState();
   }
 
   @override
@@ -47,19 +58,25 @@ class _ActionBarState extends State<ActionBar> {
         top: false,
         child: Row(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  right: BorderSide(
-                    width: 2,
-                    color: Theme.of(context).dividerColor,
+            CustomAnimatedScale(
+              onTap: () {
+                chatScreenController.showEmoji.value =
+                    !chatScreenController.showEmoji.value;
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(
+                      width: 2,
+                      color: Theme.of(context).dividerColor,
+                    ),
                   ),
                 ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Icon(
-                  Icons.emoji_emotions_outlined,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Icon(
+                    Icons.emoji_emotions_outlined,
+                  ),
                 ),
               ),
             ),
@@ -83,13 +100,13 @@ class _ActionBarState extends State<ActionBar> {
             Padding(
               padding: const EdgeInsets.only(
                 left: 12,
-                right: 24.0,
+                right: 12.0,
               ),
               child: IconButton(
                 onPressed: _sendMessage,
                 icon: const Icon(
                   Icons.send,
-                  color: Colors.black,
+                  color: Color(0xFF491CCB),
                 ),
               ),
             ),

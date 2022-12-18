@@ -1,9 +1,11 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:chat_app/app/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:chat_app/widgets/helpers.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 final pages = [
@@ -12,17 +14,23 @@ final pages = [
     title: "Connecting people \ntogether",
     bgColor: Color(0xFF0043D0),
     textColor: Colors.white,
+    lottieFile: "assets/lottie/ob1.json",
+    index: 0,
   ),
   const PageData(
     icon: Icons.format_size,
-    title: "Stay in touch with \npeople who matter the most",
+    title: "Stay in touch \nwith people",
     textColor: Colors.white,
     bgColor: Color(0xFFFDBFDD),
+    lottieFile: "assets/lottie/ob2.json",
+    index: 1,
   ),
   const PageData(
     icon: Icons.hdr_weak,
-    title: "Connect with friends\nold and new",
+    title: "Connect with friends",
     bgColor: Color(0xFFFFFFFF),
+    lottieFile: "assets/lottie/ob3.json",
+    index: 2,
   ),
 ];
 
@@ -77,12 +85,16 @@ class OnboardingView extends StatelessWidget {
 
 class PageData {
   final String? title;
+  final int index;
+  final String? lottieFile;
   final IconData? icon;
   final Color bgColor;
   final Color textColor;
 
   const PageData({
+    required this.index,
     this.title,
+    this.lottieFile,
     this.icon,
     this.bgColor = Colors.white,
     this.textColor = Colors.black,
@@ -99,21 +111,58 @@ class _Page extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     space(double p) => SizedBox(height: screenHeight * p / 100);
     return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        space(10),
-        _Image(
-          page: page,
-          size: 190,
-          iconSize: 170,
-        ),
+        // space(10),
+        // _Image(
+        //   page: page,
+        //   size: 190,
+        //   iconSize: 170,
+        // ),
         space(8),
-        _Text(
+        if (page.index == 1) space(10),
+        if (page.index == 2) space(18),
+        _LottieCustom(
           page: page,
-          style: TextStyle(
-            fontSize: screenHeight * 0.046,
-          ),
         ),
+        if (page.index == 1) space(8),
+        if (page.index == 2) space(8),
+        AnimatedText(page: page),
       ],
+    );
+  }
+}
+
+class AnimatedText extends StatelessWidget {
+  const AnimatedText({
+    Key? key,
+    required this.page,
+  }) : super(key: key);
+
+  final PageData page;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: page.index == 2 ? page.textColor : Colors.white,
+                fontSize: 28,
+              ) ??
+          TextStyle(
+            color: page.index == 2 ? Colors.blue : Colors.white,
+            fontSize: 20,
+          ),
+      child: AnimatedTextKit(
+        repeatForever: true,
+        animatedTexts: [
+          TypewriterAnimatedText(page.title ?? ""),
+        ],
+        // child: _Text(
+        //   page: page,
+        //   style: TextStyle(
+        //     fontSize: screenHeight * 0.046,
+        //   ),
+      ),
     );
   }
 }
@@ -145,71 +194,83 @@ class _Text extends StatelessWidget {
   }
 }
 
-class _Image extends StatelessWidget {
-  const _Image({
-    Key? key,
-    required this.page,
-    required this.size,
-    required this.iconSize,
-  }) : super(key: key);
+//
 
+class _LottieCustom extends StatelessWidget {
   final PageData page;
-  final double size;
-  final double iconSize;
+  const _LottieCustom({required this.page, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = page.bgColor
-        // .withBlue(page.bgColor.blue - 40)
-        .withGreen(page.bgColor.green + 20)
-        .withRed(page.bgColor.red - 100)
-        .withAlpha(90);
-
-    final icon1Color =
-        page.bgColor.withBlue(page.bgColor.blue - 10).withGreen(220);
-    final icon2Color = page.bgColor.withGreen(66).withRed(77);
-    final icon3Color = page.bgColor.withRed(111).withGreen(220);
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-        color: bgColor,
-      ),
-      child: Stack(
-        clipBehavior: Clip.none,
-        fit: StackFit.expand,
-        children: [
-          Positioned.fill(
-            child: RotatedBox(
-              quarterTurns: 2,
-              child: Icon(
-                page.icon,
-                size: iconSize + 20,
-                color: icon1Color,
-              ),
-            ),
-            right: -5,
-            bottom: -5,
-          ),
-          Positioned.fill(
-            child: RotatedBox(
-              quarterTurns: 5,
-              child: Icon(
-                page.icon,
-                size: iconSize + 20,
-                color: icon2Color,
-              ),
-            ),
-          ),
-          Icon(
-            page.icon,
-            size: iconSize,
-            color: icon3Color,
-          ),
-        ],
-      ),
-    );
+    return LottieBuilder.asset(page.lottieFile ?? "");
   }
 }
+
+// class _Image extends StatelessWidget {
+//   const _Image({
+//     Key? key,
+//     required this.page,
+//     required this.size,
+//     required this.iconSize,
+//   }) : super(key: key);
+
+//   final PageData page;
+//   final double size;
+//   final double iconSize;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final bgColor = page.bgColor
+//         // .withBlue(page.bgColor.blue - 40)
+//         .withGreen(page.bgColor.green + 20)
+//         .withRed(page.bgColor.red - 100)
+//         .withAlpha(90);
+
+//     final icon1Color =
+//         page.bgColor.withBlue(page.bgColor.blue - 10).withGreen(220);
+//     final icon2Color = page.bgColor.withGreen(66).withRed(77);
+//     final icon3Color = page.bgColor.withRed(111).withGreen(220);
+
+//     return Container(
+//       width: size,
+//       height: size,
+//       decoration: BoxDecoration(
+//         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
+//         color: bgColor,
+//       ),
+//       child: Stack(
+//         clipBehavior: Clip.none,
+//         fit: StackFit.expand,
+//         children: [
+//           Positioned.fill(
+//             child: RotatedBox(
+//               quarterTurns: 2,
+//               child: Icon(
+//                 page.icon,
+//                 size: iconSize + 20,
+//                 color: icon1Color,
+//               ),
+//             ),
+//             right: -5,
+//             bottom: -5,
+//           ),
+//           Positioned.fill(
+//             child: RotatedBox(
+//               quarterTurns: 5,
+//               child: Icon(
+//                 page.icon,
+//                 size: iconSize + 20,
+//                 color: icon2Color,
+//               ),
+//             ),
+//           ),
+//           Icon(
+//             page.icon,
+//             size: iconSize,
+//             color: icon3Color,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

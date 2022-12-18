@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
   dart_vlc
   desktop_drop
+  emoji_picker_flutter
   file_selector_windows
   flutter_native_view
   modal_progress_hud_nsn

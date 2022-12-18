@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/app/routes/app_pages.dart';
 import 'package:chat_app/widgets/profile_image.dart';
 import 'package:chat_app/constants/style_constants.dart';
 import 'package:chat_app/widgets/custom_svg_widget.dart';
@@ -40,7 +41,10 @@ class NavigationView extends GetView<NavigationController> {
         actions: [
           Obx(
             () => controller.currPage.value == 1
-                ? const ProfileImage()
+                ? const Hero(
+                    tag: "profile",
+                    child: ProfileImage(),
+                  )
                 : const SizedBox(),
           ),
           10.pw
@@ -56,7 +60,9 @@ class NavigationView extends GetView<NavigationController> {
         child: FloatingActionButton(
           elevation: 1,
           mini: true,
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(Routes.STATUS_NAV);
+          },
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
 
           backgroundColor: StyleConstants.primaryColor,

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:star_menu/star_menu.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
@@ -8,6 +9,9 @@ import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 class ChatScreenController extends GetxController {
   late final Channel channel;
   late StreamSubscription<int> unreadCountSubscription;
+  final TextEditingController controller = TextEditingController();
+
+  Rx<bool> showEmoji = false.obs;
 
   @override
   void onInit() {

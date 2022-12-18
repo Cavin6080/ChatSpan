@@ -6,11 +6,14 @@ import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 class ChatNavController extends GetxController {
   late StreamChannelListController streamChannelListController;
   // StreamChannelListController();
+
+  final _isLoading = false.obs;
+  get isLoading => this._isLoading.value;
+  set isLoading(value) => this._isLoading.value = value;
+
   @override
   void onInit() {
     log("message init chat navigation");
-    // log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).client}");
-    // log("StreamChatCore.of(Get.context!).client: ${StreamChatCore.of(Get.context!).currentUser!.id}");
     streamChannelListController = StreamChannelListController(
       client: StreamChatCore.of(Get.context!).client,
       filter: Filter.and(

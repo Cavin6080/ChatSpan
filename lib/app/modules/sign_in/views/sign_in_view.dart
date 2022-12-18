@@ -1,4 +1,5 @@
 import 'package:chat_app/animation/fade_animation.dart';
+import 'package:chat_app/animation/scale_animation.dart';
 import 'package:chat_app/app/extensions/empty_padding_extension.dart';
 import 'package:chat_app/app/extensions/image_path_extension.dart';
 import 'package:chat_app/app/routes/app_pages.dart';
@@ -187,7 +188,7 @@ class SignInView extends GetView<SignInController> {
                       const SizedBox(height: 30),
                       FadeAnimation(
                         2,
-                        InkWell(
+                        CustomAnimatedScale(
                           onTap: () => controller.signIn(context),
                           child: Container(
                             height: 50,
@@ -212,7 +213,7 @@ class SignInView extends GetView<SignInController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 70,
+                        height: 40,
                       ),
                       FadeAnimation(
                         1.5,

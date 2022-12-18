@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   dart_vlc
   desktop_drop
+  emoji_picker_flutter
   file_selector_linux
   modal_progress_hud_nsn
   screen_retriever

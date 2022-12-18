@@ -51,7 +51,7 @@ class TextInputField extends StatelessWidget {
     return TextFormField(
       // inputFormatters: name ?? [],
       maxLength: maxLength ?? 100,
-      style: const TextStyle(color: Colors.black),
+      style: const TextStyle(color: Color(0xFF491CCB)),
       enabled: enabled ?? true,
       validator: validator ?? MultiValidator([]),
       onChanged: onChanged,
