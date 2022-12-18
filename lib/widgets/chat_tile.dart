@@ -31,13 +31,10 @@ class ChatTile extends StatelessWidget {
                 : null
             : null,
       ),
-      title: Hero(
-        tag: "chatTile",
-        child: Text(
-          userName,
-          style: Theme.of(context).textTheme.bodyMedium,
-          overflow: TextOverflow.fade,
-        ),
+      title: Text(
+        userName,
+        style: Theme.of(context).textTheme.bodyMedium,
+        overflow: TextOverflow.fade,
       ),
       subtitle: lastmessage,
       trailing: Column(

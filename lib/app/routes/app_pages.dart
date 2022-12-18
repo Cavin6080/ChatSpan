@@ -76,6 +76,8 @@ class AppPages {
       name: _Paths.CHAT_SCREEN,
       page: () => ChatScreenView(),
       binding: ChatScreenBinding(),
+      // customTransition:
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: _Paths.SELECT_USER,
