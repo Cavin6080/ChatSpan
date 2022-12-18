@@ -227,6 +227,7 @@ class SignUpView extends GetView<SignUpController> {
                             ),
                           )),
                       const SizedBox(height: 30),
+                      // Card()
                       FadeAnimation(
                         2,
                         InkWell(

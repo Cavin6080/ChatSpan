@@ -85,30 +85,30 @@ class ChatScreenApBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Center(
-            child: IconButton(
-              onPressed: () => Get.back(),
-              icon: const Icon(
-                CupertinoIcons.video_camera_solid,
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: Center(
-            child: IconButton(
-              onPressed: () => Get.back(),
-              icon: const Icon(
-                CupertinoIcons.phone_solid,
-              ),
-            ),
-          ),
-        ),
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      //     child: Center(
+      //       child: IconButton(
+      //         onPressed: () => Get.back(),
+      //         icon: const Icon(
+      //           CupertinoIcons.video_camera_solid,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 20),
+      //     child: Center(
+      //       child: IconButton(
+      //         onPressed: () => Get.back(),
+      //         icon: const Icon(
+      //           CupertinoIcons.phone_solid,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 

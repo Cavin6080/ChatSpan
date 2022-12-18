@@ -26,7 +26,7 @@ class MessageBubble extends StatelessWidget {
       child: Align(
         alignment: messageAlignment,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 0.0),
           child: ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(16.0)),
             child: BubbleBackground(

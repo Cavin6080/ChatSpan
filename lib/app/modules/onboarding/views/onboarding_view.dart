@@ -9,19 +9,19 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 final pages = [
   const PageData(
     icon: Icons.bubble_chart,
-    title: "Local news\nstories",
+    title: "Connecting people \ntogether",
     bgColor: Color(0xFF0043D0),
     textColor: Colors.white,
   ),
   const PageData(
     icon: Icons.format_size,
-    title: "Choose your\ninterests",
+    title: "Stay in touch with \npeople who matter the most",
     textColor: Colors.white,
     bgColor: Color(0xFFFDBFDD),
   ),
   const PageData(
     icon: Icons.hdr_weak,
-    title: "Drag and\ndrop to move",
+    title: "Connect with friends\nold and new",
     bgColor: Color(0xFFFFFFFF),
   ),
 ];

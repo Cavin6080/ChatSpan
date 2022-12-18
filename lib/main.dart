@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 
@@ -51,7 +52,21 @@ class MyApp extends StatelessWidget {
       builder: (ctx, child) {
         return StreamChatCore(
           client: client,
-          child: child!,
+          child: StreamChat(
+            client: client,
+            child: StreamChatTheme(
+              data: StreamChatThemeData(
+                messageListViewTheme: const StreamMessageListViewThemeData(
+                  backgroundColor: Colors.white,
+                ),
+                ownMessageTheme: const StreamMessageThemeData(
+                  reactionsBackgroundColor: Colors.black,
+                  messageBackgroundColor: Colors.white,
+                ),
+              ),
+              child: child!,
+            ),
+          ),
         );
       },
     );
