@@ -52,21 +52,7 @@ class MyApp extends StatelessWidget {
       builder: (ctx, child) {
         return StreamChatCore(
           client: client,
-          child: StreamChat(
-            client: client,
-            child: StreamChatTheme(
-              data: StreamChatThemeData(
-                messageListViewTheme: const StreamMessageListViewThemeData(
-                  backgroundColor: Colors.white,
-                ),
-                ownMessageTheme: const StreamMessageThemeData(
-                  reactionsBackgroundColor: Colors.black,
-                  messageBackgroundColor: Colors.white,
-                ),
-              ),
-              child: child!,
-            ),
-          ),
+          child: child!,
         );
       },
     );
