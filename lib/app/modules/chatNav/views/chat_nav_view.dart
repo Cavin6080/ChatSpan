@@ -129,6 +129,8 @@ class ChatNavView extends StatelessWidget {
                                             foregroundColor: Colors.white,
                                             icon: Icons.delete,
                                             label: 'Delete',
+                                            spacing: 10,
+                                            padding: EdgeInsets.zero,
                                           ),
                                         ],
                                       ),

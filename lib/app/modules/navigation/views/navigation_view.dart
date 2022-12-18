@@ -98,11 +98,13 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CustomSvgWidget(
-                      path: "assets/svg/call.svg",
-                      color: StyleConstants.primaryColor,
-                    ),
+                  children: [
+                    Obx(() => CustomSvgWidget(
+                          path: controller.currPage.value == 0
+                              ? "assets/svg/call_filled.svg"
+                              : "assets/svg/call_outLine.svg",
+                          color: StyleConstants.primaryColor,
+                        )),
                   ],
                 ),
               ),
@@ -114,13 +116,14 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CustomSvgWidget(
-                      path: "assets/svg/chat.svg",
+                  children: [
+                    Obx(
+                      () => CustomSvgWidget(
+                        path: controller.currPage.value == 1
+                            ? "assets/svg/chat_bubble_filled.svg"
+                            : "assets/svg/chat_bubble_outline.svg",
+                      ),
                     ),
-                    // Text(
-                    //   'Home',
-                    // )
                   ],
                 ),
               ),
@@ -135,11 +138,13 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    CustomSvgWidget(
-                      path: "assets/svg/map.svg",
-                      height: 25,
-                    ),
+                  children: [
+                    Obx(() => CustomSvgWidget(
+                          path: controller.currPage.value == 2
+                              ? "assets/svg/map_filled.svg"
+                              : "assets/svg/map.svg",
+                          height: 25,
+                        )),
                     // Text(
                     //   'Home',
                     // )
