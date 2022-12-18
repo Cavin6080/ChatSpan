@@ -12,6 +12,11 @@ abstract class Routes {
   static const STATUS_NAV = _Paths.STATUS_NAV;
   static const CHAT_SCREEN = _Paths.CHAT_SCREEN;
   static const SELECT_USER = _Paths.SELECT_USER;
+  static const PROFILE = _Paths.PROFILE;
+  static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
+  static const SIGN_IN = _Paths.SIGN_IN;
+  static const SIGN_UP = _Paths.SIGN_UP;
+  static const ONBOARDING = _Paths.ONBOARDING;
 }
 
 abstract class _Paths {
@@ -25,4 +30,9 @@ abstract class _Paths {
   static const STATUS_NAV = '/status-nav';
   static const CHAT_SCREEN = '/chat-screen';
   static const SELECT_USER = '/select-user';
+  static const PROFILE = '/profile';
+  static const SPLASH_SCREEN = '/splash-screen';
+  static const SIGN_IN = '/sign-in';
+  static const SIGN_UP = '/sign-up';
+  static const ONBOARDING = '/onboarding';
 }

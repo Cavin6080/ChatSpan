@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:chat_app/app/extensions/empty_padding_extension.dart';
+import 'package:chat_app/app/routes/app_pages.dart';
+import 'package:chat_app/widgets/profile_image.dart';
+import 'package:chat_app/constants/style_constants.dart';
+import 'package:chat_app/widgets/custom_svg_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/navigation_controller.dart';
@@ -20,6 +23,33 @@ class NavigationView extends GetView<NavigationController> {
       //   centerTitle: true,
       //   leading: const SizedBox(),
       // ),
+      appBar: AppBar(
+        leading: const SizedBox.shrink(),
+        title: Obx(
+          () => Text(
+            controller.currPage.value == 0
+                ? 'Call'
+                : controller.currPage.value == 1
+                    ? "Chat"
+                    : controller.currPage.value == 2
+                        ? "Maps"
+                        : "Status",
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          Obx(
+            () => controller.currPage.value == 1
+                ? const Hero(
+                    tag: "profile",
+                    child: ProfileImage(),
+                  )
+                : const SizedBox(),
+          ),
+          10.pw
+        ],
+      ),
       // body: resizeToAvoidBottomInset: false,
       body: Obx(() => PageStorage(
             bucket: bucket,
@@ -30,11 +60,16 @@ class NavigationView extends GetView<NavigationController> {
         child: FloatingActionButton(
           elevation: 1,
           mini: true,
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(Routes.STATUS_NAV);
+          },
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
 
-          backgroundColor: Colors.amber,
-          child: Icon(Icons.add),
+          backgroundColor: StyleConstants.primaryColor,
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ),
       floatingActionButtonLocation:
@@ -64,13 +99,12 @@ class NavigationView extends GetView<NavigationController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/call.svg",
-                      color: Colors.amber,
-                    ),
-                    // Text(
-                    //   'Home',
-                    // )
+                    Obx(() => CustomSvgWidget(
+                          path: controller.currPage.value == 0
+                              ? "assets/svg/call_filled.svg"
+                              : "assets/svg/call_outLine.svg",
+                          color: StyleConstants.primaryColor,
+                        )),
                   ],
                 ),
               ),
@@ -83,17 +117,17 @@ class NavigationView extends GetView<NavigationController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/chat.svg",
-                      color: Colors.amber,
+                    Obx(
+                      () => CustomSvgWidget(
+                        path: controller.currPage.value == 1
+                            ? "assets/svg/chat_bubble_filled.svg"
+                            : "assets/svg/chat_bubble_outline.svg",
+                      ),
                     ),
-                    // Text(
-                    //   'Home',
-                    // )
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 30,
               ),
               MaterialButton(
@@ -105,11 +139,12 @@ class NavigationView extends GetView<NavigationController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPicture.asset(
-                      "assets/svg/map.svg",
-                      height: 25,
-                      color: Colors.amber,
-                    ),
+                    Obx(() => CustomSvgWidget(
+                          path: controller.currPage.value == 2
+                              ? "assets/svg/map_filled.svg"
+                              : "assets/svg/map.svg",
+                          height: 25,
+                        )),
                     // Text(
                     //   'Home',
                     // )
@@ -124,10 +159,9 @@ class NavigationView extends GetView<NavigationController> {
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/svg/status.svg",
-                      color: Colors.amber,
+                  children: const [
+                    CustomSvgWidget(
+                      path: "assets/svg/status.svg",
                       height: 30,
                     ),
                     // Text(

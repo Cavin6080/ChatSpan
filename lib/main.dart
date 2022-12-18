@@ -1,14 +1,30 @@
 import 'package:chat_app/constants/constants.dart';
+import 'package:chat_app/firebase_options.dart';
+import 'package:chat_app/initial_bindings.dart';
 import 'package:chat_app/theme/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+import 'package:stream_chat_persistence/stream_chat_persistence.dart';
 
 import 'app/routes/app_pages.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// Set the chatPersistenceClient for offline support
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final client = StreamChatClient(Constant.STREAM_KEY);
+  // client.chatPersistenceClient = StreamChatPersistenceClient(
+  //   logLevel: Level.INFO,
+  //   connectionMode: ConnectionMode.background,
+  // );
   runApp(
     MyApp(client: client),
   );
@@ -25,10 +41,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Application",
-      initialRoute: Routes.SELECT_USER,
+      initialRoute: Routes.ONBOARDING,
       debugShowCheckedModeBanner: false,
       // initialRoute: AppPages.INITIAL,
-      // initialBinding: InitialBinding(),
+      initialBinding: InitialBinding(),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
@@ -36,7 +52,21 @@ class MyApp extends StatelessWidget {
       builder: (ctx, child) {
         return StreamChatCore(
           client: client,
-          child: child!,
+          child: StreamChat(
+            client: client,
+            child: StreamChatTheme(
+              data: StreamChatThemeData(
+                messageListViewTheme: const StreamMessageListViewThemeData(
+                  backgroundColor: Colors.white,
+                ),
+                ownMessageTheme: const StreamMessageThemeData(
+                  reactionsBackgroundColor: Colors.black,
+                  messageBackgroundColor: Colors.white,
+                ),
+              ),
+              child: child!,
+            ),
+          ),
         );
       },
     );

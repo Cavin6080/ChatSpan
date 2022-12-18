@@ -3,6 +3,15 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  dart_vlc
+  desktop_drop
+  emoji_picker_flutter
+  file_selector_linux
+  modal_progress_hud_nsn
+  screen_retriever
+  sqlite3_flutter_libs
+  url_launcher_linux
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -15,18 +15,48 @@ dependencies:
   badges: ^2.0.3
   form_field_validator: ^1.1.0
   nil: ^1.1.1
-  stream_chat_flutter_core: ^5.1.0
+  # stream_chat_flutter_core: ^5.1.0
   jiffy: ^5.0.0
   cached_network_image: ^3.2.3
+  loading_animation_widget: ^1.2.0+4
+  modal_progress_hud_nsn: ^0.3.0
+  firebase_core: ^2.4.0
+  firebase_auth: ^4.2.1
+  cloud_functions: ^4.0.6
+  stream_chat_persistence: ^5.1.0
+  rive: ^0.9.1
+  simple_animations: ^5.0.0+3
+  skeletons: ^0.0.3
+  flutter_staggered_animations: ^1.1.1
+  star_menu: ^3.1.0+1
+  concentric_transition: ^1.0.3
+  stream_chat_flutter: ^5.1.0
+  emoji_picker_flutter: ^1.5.1
+  flutter_slidable: ^2.0.0
+  lottie: ^1.4.3
+  animated_text_kit: ^4.2.2
+  fade_out_particle: ^1.2.1
+  flutter_launcher_name: ^0.0.1
 
 dev_dependencies: 
+  # flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.0
   flutter_test: 
     sdk: flutter
+
+flutter_launcher_name:
+  name: "ChatSpan"
+
+# flutter_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/png/icon.png"
 
 flutter: 
   uses-material-design: true
 
   assets:
     - assets/svg/    
+    - assets/png/    
+    - assets/lottie/    
 

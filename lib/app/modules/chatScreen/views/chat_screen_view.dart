@@ -1,181 +1,322 @@
-import 'package:chat_app/app/extensions/empty_padding_extension.dart';
-import 'package:chat_app/app/modules/chatScreen/custom_painter/chat_bubble_painter.dart';
+import 'dart:developer';
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:chat_app/app/extensions/stream_chat_extension.dart';
+import 'package:chat_app/app/modules/chatScreen/views/message_bubble.dart';
+import 'package:chat_app/constants/constants.dart';
 import 'package:chat_app/widgets/chat_app_bar.dart';
-import 'package:chat_app/widgets/custom_text_field.dart';
+import 'package:chat_app/widgets/chat_screen_widgets/action_bar.dart';
+import 'package:chat_app/widgets/helpers.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:star_menu/star_menu.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../controllers/chat_screen_controller.dart';
-
-import 'dart:math';
-import 'dart:ui' as ui;
-
-import 'package:flutter/material.dart';
-// import '../app.dart';
 
 class ChatScreenView extends GetView<ChatScreenController> {
   const ChatScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final data = MessageGenerator.generate(60, 1337);
-
-    return Scaffold(
-      appBar: const ChatScreenApBar(photoUrl: "", userName: "Cavin"),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              reverse: true,
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final message = data[index];
-                return MessageBubble(
-                  message: message,
-                  child: Text(message.text),
-                );
-              },
+    // final data = MessageGenerator.generate(60, 1337);
+    return WillPopScope(
+      onWillPop: () {
+        if (controller.showEmoji.value) {
+          controller.showEmoji.value = false;
+          return Future.value(false);
+        } else {
+          return Future.value(true);
+        }
+      },
+      child: StreamChannel(
+        channel: controller.channel,
+        child: Scaffold(
+          appBar: ChatScreenApBar(
+            photoUrl: getChannelImage(controller.channel, context.currentUser!),
+            userName: getChannelName(
+              controller.channel,
+              context.currentUser!,
             ),
           ),
-          TextInputField(
-            hinttext: 'Enter your message here',
-          ),
-        ],
-      ),
-    );
-  }
-}
+          body: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    // child: StreamMessageListView(
+                    //   showFloatingDateDivider: false,
+                    //   // threadBuilder: (_, parentMessage) {
+                    //   //   return ThreadPage(
+                    //   //     parent: parentMessage,
+                    //   //   );
+                    //   // },
+                    //   spacingWidgetBuilder: (context, spacingTypes) =>
+                    //       SizedBox.shrink(),
+                    //   // messageListBuilder: ,
+                    //   dateDividerBuilder: (date) {
+                    //     return FittedBox(
+                    //       fit: BoxFit.scaleDown,
+                    //       child: Container(
+                    //         padding: const EdgeInsets.all(10),
+                    //         // width: 100,
+                    //         decoration: BoxDecoration(
+                    //             borderRadius: BorderRadius.circular(20),
+                    //             gradient: const LinearGradient(
+                    //               begin: Alignment.topRight,
+                    //               end: Alignment.bottomLeft,
+                    //               colors: [
+                    //                 Color(0xFF19B7FF),
+                    //                 Color(0xFF491CCB),
+                    //               ],
+                    //             )),
+                    //         child: Center(
+                    //           child: Text(
+                    //             "${controller.customdate(date.toLocal())}",
+                    //             style:
+                    //                 Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    //                       color: Colors.white,
+                    //                     ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    //   // unreadMessagesSeparatorBuilder: ,
+                    //   // reactionBuilder:
+                    //   messageBuilder:
+                    //       (context, messageDetails, messageList, defaultWidget) {
+                    //     return defaultWidget.copyWith(
+                    //       widthFactor: 3,
+                    //       showReactionPickerIndicator: false,
+                    //       // borderRadiusGeometry: BorderRadius.zero,
+                    //       attachmentBorderRadiusGeometry: BorderRadius.circular(20),
+                    //       attachmentPadding:
+                    //           const EdgeInsets.symmetric(horizontal: 10),
+                    //       imageAttachmentThumbnailSize: Size(
+                    //         MediaQuery.of(context).size.width * 0.5,
+                    //         MediaQuery.of(context).size.height * 0.2,
+                    //       ),
 
-@immutable
-class MessageBubble extends StatelessWidget {
-  const MessageBubble({
-    required this.message,
-    required this.child,
-    super.key,
-  });
-
-  final Message message;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final messageAlignment =
-        message.isMine ? Alignment.topLeft : Alignment.topRight;
-
-    return FractionallySizedBox(
-      alignment: messageAlignment,
-      widthFactor: 0.8,
-      child: Align(
-        alignment: messageAlignment,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 20.0),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-            child: BubbleBackground(
-              colors: [
-                message.isMine
-                    ? const Color(0xFF6C7689)
-                    : const Color(0xFF19B7FF),
-                message.isMine
-                    ? const Color(0xFF3A364B)
-                    : const Color(0xFF491CCB),
-              ],
-              child: DefaultTextStyle.merge(
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white,
+                    //       showReactions: true,
+                    //       showFlagButton: true,
+                    //       padding: EdgeInsets.zero,
+                    //       showUserAvatar: DisplayWidget.hide,
+                    //       borderSide: BorderSide.none,
+                    //       textPadding: EdgeInsets.zero,
+                    //       showTimestamp: false,
+                    //       showUsername: false,
+                    //       // messageTheme: StreamMessageThemeData(
+                    //       //     // messageBackgroundColor: Colors.white,
+                    //       //     ),
+                    //       textBuilder: (ctx, message) => MessageBubble(
+                    //         message: message,
+                    //         child: Text(message.text ?? ""),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    child: MessageListCore(
+                      emptyBuilder: (context) => Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/svg/no_data.svg",
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            width: MediaQuery.of(context).size.width * 0.5,
+                          ),
+                          const Text("No messages"),
+                        ],
+                      )),
+                      errorBuilder: (BuildContext context, Object error) =>
+                          const Center(child: Text("Error")),
+                      loadingBuilder: (BuildContext context) =>
+                          Center(child: loadingIndicator),
+                      messageListBuilder: (ctx, messages) {
+                        return ListView.builder(
+                          reverse: true,
+                          itemCount: messages.length + 1,
+                          itemBuilder: (context, index) {
+                            if (index < messages.length) {
+                              final message = messages[index];
+                              log("message.type: ${message.type}");
+                              return AnimationConfiguration.staggeredList(
+                                duration: const Duration(milliseconds: 375),
+                                position: index,
+                                child: GestureDetector(
+                                  onLongPress: () {
+                                    // Get.bottomSheet(ListView());
+                                    // Get.dialog(Container());
+                                    // StarMenuController().openMenu!();
+                                    // StarMenu(
+                                    //   params: StarMenuParameters(),
+                                    //   controller: StarMenuController(),
+                                    //   items: [
+                                    //     Container(
+                                    //       height: 20,
+                                    //       color: Colors.black,
+                                    //     ),
+                                    //     Container(
+                                    //       height: 20,
+                                    //       color: Colors.green,
+                                    //     ),
+                                    //     Container(
+                                    //       height: 20,
+                                    //       color: Colors.red,
+                                    //     ),
+                                    //     Container(
+                                    //       height: 20,
+                                    //       color: Colors.amber,
+                                    //     ),
+                                    //   ],
+                                    //   child: Container(
+                                    //     height: 30,
+                                    //     color: Colors.blueGrey,
+                                    //   ),
+                                    // );
+                                  },
+                                  child: MessageBubble(
+                                    message: message,
+                                    child: Text(message.text ?? ""),
+                                  ),
+                                ),
+                              );
+                            }
+                            return const SizedBox();
+                          },
+                        );
+                      },
                     ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: child,
-                ),
+                  ),
+                  // StreamMessageInput(
+                  //   enableActionAnimation: true,
+                  //   sendButtonLocation: SendButtonLocation.inside,
+                  //   textInputAction: TextInputAction.done,
+                  //   attachmentButtonBuilder: (context, attachmentButton) {
+                  //     return attachmentButton.copyWith(
+                  //       color: const Color(0xFF491CCB),
+                  //     );
+                  //   },
+                  //   idleSendButton: Padding(
+                  //     padding: const EdgeInsets.only(right: 8.0),
+                  //     child: Icon(
+                  //       Icons.send,
+                  //       color: Colors.grey.shade400,
+                  //     ),
+                  //   ),
+                  //   activeSendButton: const Padding(
+                  //     padding: EdgeInsets.only(right: 10.0),
+                  //     child: Icon(
+                  //       Icons.send,
+                  //       color: Color(0xFF491CCB),
+                  //     ),
+                  //   ),
+                  // ),
+                  ActionBar(),
+                  Obx(
+                    () => controller.showEmoji.value
+                        ? Flexible(
+                            child: EmojiPicker(
+                              // onEmojiSelected: (Category category, Emoji emoji) {
+                              //     // Do something when emoji is tapped (optional)
+                              // },
+                              onBackspacePressed: () {
+                                // Do something when the user taps the backspace button (optional)
+                              },
+                              textEditingController: controller.controller,
+                              config: Config(
+                                columns: 7,
+                                emojiSizeMax: 32 *
+                                    (foundation.defaultTargetPlatform ==
+                                            TargetPlatform.iOS
+                                        ? 1.30
+                                        : 1.0),
+                                verticalSpacing: 0,
+                                horizontalSpacing: 0,
+                                gridPadding: EdgeInsets.zero,
+                                initCategory: Category.RECENT,
+                                bgColor: Color(0xFFF2F2F2),
+                                indicatorColor: Colors.blue,
+                                iconColor: Colors.grey,
+                                iconColorSelected: Colors.blue,
+                                backspaceColor: Colors.blue,
+                                skinToneDialogBgColor: Colors.white,
+                                skinToneIndicatorColor: Colors.grey,
+                                enableSkinTones: true,
+                                showRecentsTab: true,
+                                recentsLimit: 28,
+                                noRecents: const Text(
+                                  'No Recents',
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.black26),
+                                  textAlign: TextAlign.center,
+                                ), // Needs to be const Widget
+                                loadingIndicator: const SizedBox
+                                    .shrink(), // Needs to be const Widget
+                                tabIndicatorAnimDuration: kTabScrollDuration,
+                                categoryIcons: const CategoryIcons(),
+                                buttonMode: ButtonMode.MATERIAL,
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  )
+                ],
               ),
-            ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-
-@immutable
-class BubbleBackground extends StatelessWidget {
-  const BubbleBackground({
-    super.key,
-    required this.colors,
-    this.child,
-  });
-
-  final List<Color> colors;
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: BubblePainter(
-        scrollable: Scrollable.of(context)!,
-        bubbleContext: context,
-        colors: colors,
-      ),
-      child: child,
-    );
-  }
-}
-
-enum MessageOwner { myself, other }
-
-@immutable
-class Message {
-  const Message({
-    required this.owner,
-    required this.text,
-  });
-
-  final MessageOwner owner;
-  final String text;
-
-  bool get isMine => owner == MessageOwner.myself;
-}
-
-class MessageGenerator {
-  static List<Message> generate(int count, [int? seed]) {
-    final random = Random(seed);
-    return List.unmodifiable(List<Message>.generate(count, (index) {
-      return Message(
-        owner: random.nextBool() ? MessageOwner.myself : MessageOwner.other,
-        text: _exampleData[random.nextInt(_exampleData.length)],
-      );
-    }));
-  }
-
-  static final _exampleData = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'In tempus mauris at velit egestas, sed blandit felis ultrices.',
-    'Ut molestie mauris et ligula finibus iaculis.',
-    'Sed a tempor ligula.',
-    'Test',
-    'Phasellus ullamcorper, mi ut imperdiet consequat, nibh augue condimentum nunc, vitae molestie massa augue nec erat.',
-    'Donec scelerisque, erat vel placerat facilisis, eros turpis egestas nulla, a sodales elit nibh et enim.',
-    'Mauris quis dignissim neque. In a odio leo. Aliquam egestas egestas tempor. Etiam at tortor metus.',
-    'Quisque lacinia imperdiet faucibus.',
-    'Proin egestas arcu non nisl laoreet, vitae iaculis enim volutpat. In vehicula convallis magna.',
-    'Phasellus at diam a sapien laoreet gravida.',
-    'Fusce maximus fermentum sem a scelerisque.',
-    'Nam convallis sapien augue, malesuada aliquam dui bibendum nec.',
-    'Quisque dictum tincidunt ex non lobortis.',
-    'In hac habitasse platea dictumst.',
-    'Ut pharetra ligula libero, sit amet imperdiet lorem luctus sit amet.',
-    'Sed ex lorem, lacinia et varius vitae, sagittis eget libero.',
-    'Vestibulum scelerisque velit sed augue ultricies, ut vestibulum lorem luctus.',
-    'Pellentesque et risus pretium, egestas ipsum at, facilisis lectus.',
-    'Praesent id eleifend lacus.',
-    'Fusce convallis eu tortor sit amet mattis.',
-    'Vivamus lacinia magna ut urna feugiat tincidunt.',
-    'Sed in diam ut dolor imperdiet vehicula non ac turpis.',
-    'Praesent at est hendrerit, laoreet tortor sed, varius mi.',
-    'Nunc in odio leo.',
-    'Praesent placerat semper libero, ut aliquet dolor.',
-    'Vestibulum elementum leo metus, vitae auctor lorem tincidunt ut.',
-  ];
-}
+// controller.showEmoji.value
+//                       ? EmojiPicker(
+//                           // onEmojiSelected: (Category category, Emoji emoji) {
+//                           //     // Do something when emoji is tapped (optional)
+//                           // },
+//                           onBackspacePressed: () {
+//                             // Do something when the user taps the backspace button (optional)
+//                           },
+//                           // textEditingController: controller.ed,
+//                           config: Config(
+//                             columns: 7,
+//                             emojiSizeMax: 32 *
+//                                 (foundation.defaultTargetPlatform ==
+//                                         TargetPlatform.iOS
+//                                     ? 1.30
+//                                     : 1.0),
+//                             verticalSpacing: 0,
+//                             horizontalSpacing: 0,
+//                             gridPadding: EdgeInsets.zero,
+//                             initCategory: Category.RECENT,
+//                             bgColor: Color(0xFFF2F2F2),
+//                             indicatorColor: Colors.blue,
+//                             iconColor: Colors.grey,
+//                             iconColorSelected: Colors.blue,
+//                             backspaceColor: Colors.blue,
+//                             skinToneDialogBgColor: Colors.white,
+//                             skinToneIndicatorColor: Colors.grey,
+//                             enableSkinTones: true,
+//                             showRecentsTab: true,
+//                             recentsLimit: 28,
+//                             noRecents: const Text(
+//                               'No Recents',
+//                               style: TextStyle(
+//                                   fontSize: 20, color: Colors.black26),
+//                               textAlign: TextAlign.center,
+//                             ), // Needs to be const Widget
+//                             loadingIndicator: const SizedBox
+//                                 .shrink(), // Needs to be const Widget
+//                             tabIndicatorAnimDuration: kTabScrollDuration,
+//                             categoryIcons: const CategoryIcons(),
+//                             buttonMode: ButtonMode.MATERIAL,
+//                           ),
+//                         )
+//                       : 

@@ -4,6 +4,17 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
+  dart_vlc
+  desktop_drop
+  emoji_picker_flutter
+  file_selector_windows
+  flutter_native_view
+  modal_progress_hud_nsn
+  screen_retriever
+  sqlite3_flutter_libs
+  thumblr_windows
+  url_launcher_windows
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

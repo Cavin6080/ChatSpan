@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "160456497546",
+    "project_id": "chatspan",
+    "storage_bucket": "chatspan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160456497546:android:b6d3df1543a2d0d35c5073",
+        "android_client_info": {
+          "package_name": "com.u7span.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "160456497546-sr1cqebriqeg850gqmkqtdva2fqdhtu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNBSLvW7TzC03efAdy9EkJREKoja8TkEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160456497546-sr1cqebriqeg850gqmkqtdva2fqdhtu5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "160456497546-ls3303s8h63uarku7h80eui3d83hu1a7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.7span.chatApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
