@@ -47,30 +47,30 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyADoUem7PCXnthnEz47zBbpN33aGhZQuxA',
-    appId: '1:160456497546:web:943fbcda42bce5dc5c5073',
-    messagingSenderId: '160456497546',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
     projectId: 'chatspan',
-    authDomain: 'chatspan.firebaseapp.com',
-    storageBucket: 'chatspan.appspot.com',
-    measurementId: 'G-7MZ9W6CHTH',
+    authDomain: '',
+    storageBucket: '',
+    measurementId: '',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCNBSLvW7TzC03efAdy9EkJREKoja8TkEo',
-    appId: '1:160456497546:android:b6d3df1543a2d0d35c5073',
-    messagingSenderId: '160456497546',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
     projectId: 'chatspan',
     storageBucket: 'chatspan.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB1DF7NsivTSy1_EbDePogbyf9AH5hhV1s',
-    appId: '1:160456497546:ios:94284ec80691a2fb5c5073',
-    messagingSenderId: '160456497546',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
     projectId: 'chatspan',
-    storageBucket: 'chatspan.appspot.com',
-    iosClientId: '160456497546-ls3303s8h63uarku7h80eui3d83hu1a7.apps.googleusercontent.com',
-    iosBundleId: 'com.7span.chatApp',
+    storageBucket: '',
+    iosClientId: '',
+    iosBundleId: '',
   );
 }
