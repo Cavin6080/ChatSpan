@@ -202,13 +202,11 @@ class _CustomAnimatedScale extends State<CustomAnimatedScale>
   }
 
   void _tapDown(TapDownDetails details) async {
-    log("on tap down");
     await _controller.forward();
     // _controller.isCompleted ? _controller.reverse() : null;
   }
 
   void _tapUp(TapUpDetails details) {
-    log("on tap up");
     _controller.reverse();
   }
 

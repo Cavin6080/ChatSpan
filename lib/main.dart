@@ -41,20 +41,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Application",
-      initialRoute: Routes.ONBOARDING,
+      initialRoute: Routes.SIGN_IN,
       debugShowCheckedModeBanner: false,
       // initialRoute: AppPages.INITIAL,
       initialBinding: InitialBinding(),
       theme: AppTheme.lightTheme,
-      // darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       getPages: AppPages.routes,
-      builder: (ctx, child) {
-        return StreamChatCore(
-          client: client,
-          child: child!,
-        );
-      },
+      // builder: (ctx, child) {
+      //   return StreamChatCore(
+      //     client: client,
+      //     child: child!,
+      //   );
+      // },
     );
   }
 }
